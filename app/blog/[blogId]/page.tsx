@@ -1,15 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const apiUrl = 'https://api.synodic.ai';
 
-const BlogPost: React.FC = () => {
-  const [htmlContent, setHtmlContent] = useState<string | null>(null);
-  const router = useRouter();
-  const { id } = router.query;
+export default function BlogPost({ params }: { params: { blogId: string } }) {
+    const [htmlContent, setHtmlContent] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCampaignHtml = async (campaignId: string) => {
@@ -24,10 +22,8 @@ const BlogPost: React.FC = () => {
       }
     };
 
-    if (id) {
-      fetchCampaignHtml(id as string);
-    }
-  }, [id]);
+    fetchCampaignHtml(params.blogId);
+  }, [params.blogId]);
 
   if (!htmlContent) {
     return <p>Loading...</p>;
@@ -39,5 +35,3 @@ const BlogPost: React.FC = () => {
     </div>
   );
 };
-
-export default BlogPost;
