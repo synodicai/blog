@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { parse } from 'node-html-parser';
@@ -46,7 +47,6 @@ const formatDate = (dateString: string | undefined): string => {
 
 const MailchimpCampaigns: React.FC = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -57,10 +57,6 @@ const MailchimpCampaigns: React.FC = () => {
     fetchCampaigns();
   }, []);
 
-  const handleCardClick = (campaignId: string) => {
-    router.push(`/blog/${campaignId}`);
-  };
-
   return (
     <div className="flex flex-col items-center">
       {campaigns.length === 0 ? (
@@ -70,16 +66,18 @@ const MailchimpCampaigns: React.FC = () => {
           {campaigns
             .filter(campaign => campaign.settings?.preview_text)
             .map((campaign) => (
-              <div className="mb-5 cursor-pointer" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
-                    <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Posted {formatDate(campaign.send_time)}</p>
-                  </CardContent>
-                </Card>
+              <div className="mb-5 cursor-pointer" key={campaign.id}>
+                <Link href={campaign.id}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
+                      <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Posted {formatDate(campaign.send_time)}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
               </div>
             ))}
         </div>

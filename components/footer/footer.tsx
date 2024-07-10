@@ -19,25 +19,25 @@ export function Footer() {
           className="text-gray-500 hover:underline mr-1 ml-1"
           style={{ fontSize: "12px", gridColumn: "4", textAlign: "center" }}
         >
-          <Link href="/terms">Terms</Link>
+          <Link href="https://synodic.ai/terms">Terms</Link>
         </p>
         <p
           className="text-gray-500 hover:underline mr-1 ml-1"
           style={{ fontSize: "12px", gridColumn: "5", textAlign: "center" }}
         >
-          <Link href="/privacy">Privacy</Link>
+          <Link href="https://synodic.ai/privacy">Privacy</Link>
         </p>
         <p
           className="text-gray-500 hover:underline mr-1 ml-1"
           style={{ fontSize: "12px", gridColumn: "6", textAlign: "center" }}
         >
-          <Link href="/pricing">Pricing</Link>
+          <Link href="https://synodic.ai/pricing">Pricing</Link>
         </p>
         <p
           className="text-gray-500 hover:underline ml-1"
           style={{ fontSize: "12px", gridColumn: "7", textAlign: "center" }}
         >
-          <Link href="/contact">Contact</Link>
+          <Link href="https://synodic.ai/contact">Contact</Link>
         </p>
       </footer>
     </div>
