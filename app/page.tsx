@@ -1,5 +1,3 @@
-// "use client"
-// import { useState } from 'react';
 import Link from 'next/link';
 
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,7 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-// import { CustomPagination } from '@/components/pagination';
+// import { CustomPagination } from '@/components/ui/custom-pagination';
 
 async function getData() {
     const response = await fetch("https://api.synodic.ai/campaigns", { cache: 'force-cache' });
@@ -23,7 +21,7 @@ async function getData() {
 
 export default async function Page() {
     const campaigns = await getData();
-    
+
     return (
         <div className='min-h-screen'>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 ">
