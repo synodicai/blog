@@ -7,7 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -51,6 +51,16 @@ const config = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        syntax: {
+          blue: "#4FAFD0",
+          white: "#FFFFFF",
+          red: "#FF4F5F",
+          yellow: "#F8D490",
+          brown: "#9A5C6A",
+          pink: "#D0889A",
+          custom_gray: "#a9b1cc",
+          navbar: "#020817"
         },
       },
       borderRadius: {
