@@ -1,9 +1,12 @@
 'use client';
 
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { parse } from 'node-html-parser';
 import { Skeleton } from "@/components/ui/skeleton"
+
+import './page.css';
 
 const apiUrl = 'https://api.synodic.ai';
 
@@ -50,7 +53,6 @@ export default function BlogPost({ params }: { params: { blogId: string } }) {
   if (!htmlContent) {
     return <div className="flex flex-col items-center"><Skeleton className="mb-5 h-[100vh] w-[660px]" /></div>;
   }
-
   return (
     <div className="container mx-auto p-4 ">
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
