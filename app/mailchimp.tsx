@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 import { Skeleton } from "@/components/ui/skeleton";
 
 const apiUrl = 'https://api.synodic.ai';
@@ -15,6 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import { CustomPagination } from '@/components/pagination';
 
 interface Campaign {
   id: string;
@@ -47,7 +48,7 @@ const formatDate = (dateString: string | undefined): string => {
 
 const MailchimpCampaigns: React.FC = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -58,51 +59,59 @@ const MailchimpCampaigns: React.FC = () => {
     fetchCampaigns();
   }, []);
 
-  const handleCardClick = (campaignId: string) => {
-    router.push(`/blog/${campaignId}`);
-  };
-
   const filteredCampaigns = campaigns
     .filter(campaign => campaign.settings?.preview_text)
     .sort((a, b) => new Date(b.send_time).getTime() - new Date(a.send_time).getTime());
 
+  console.log(filteredCampaigns)
+
   return (
-    <div className="flex flex-col items-center">
-      {campaigns.length === 0 ? (
-        <div>
-          {[...Array(5)].map((_, index) => (
-            <div className='mb-5' key={index}>
-              <Card>
-                <CardHeader>
-                  <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
-                  <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-[24px]" />
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>
-          {filteredCampaigns.map((campaign) => (
-            <div className="mb-5 cursor-pointer m-3" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
-              <Card>
-                <CardHeader>
-                  <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
-                  <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Posted {formatDate(campaign.send_time)}</p>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className='min-h-screen'>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 ">
+        {
+          campaigns.length == 0 ? (
+            <>
+              {[...Array(6)].map((_, index) => (
+                <Card key={index}>
+                  <CardHeader>
+                    <CardTitle><Skeleton className="h-[24px] w-[250px]" /></CardTitle>
+                    <CardDescription><Skeleton className="h-[20px] w-[350px]" /></CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-[24px]" />
+                  </CardContent>
+                </Card>
+              ))}
+            </>
+          ) : (
+            <>
+              {filteredCampaigns
+                .slice(currentPage * 6, (currentPage + 1) * 6)
+                .map((campaign, index) => (
+                  <div className="cursor-pointer" key={campaign.id}>
+                    <Link href={`/${campaign.id}`}>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
+                          <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <p>Posted {formatDate(campaign.send_time)}</p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </div>
+                ))}
+            </>
+          )
+        }
+        <CustomPagination pages={Math.ceil(filteredCampaigns.length / 6)} setCurrentPage={setCurrentPage} />
+      </div>
     </div>
   );
+
+
 };
 
 export default MailchimpCampaigns;

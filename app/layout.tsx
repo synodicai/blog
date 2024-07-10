@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/footer/footer";
 import { Navbar } from "@/components/navbar/currentNavbar";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,13 +25,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body>
-          <div className="flex min-h-screen w-full flex-col bg-white">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen w-full flex-col">
             <Navbar />
-            <div className="mt-20 md:mt-2">
+            <div className="mt-20 md:mt-0">
               {children}
             </div>
             <Footer />
           </div>
+        </ThemeProvider>
       </body>
     </html>
   );

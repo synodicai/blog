@@ -37,7 +37,7 @@ export default function BlogPost({ params }: { params: { blogId: string } }) {
     const fetchCampaignHtml = async (campaignId: string) => {
       const url = `${apiUrl}/campaigns/${campaignId}`;
       const response = await axios.get(url);
-
+      
       if (response.status === 200) {
         const cleanedHtmlContent = cleanHtmlContent(response.data.html);
         setHtmlContent(cleanedHtmlContent || '');
@@ -54,8 +54,6 @@ export default function BlogPost({ params }: { params: { blogId: string } }) {
     return <div className="flex flex-col items-center"><Skeleton className="mb-5 h-[100vh] w-[660px]" /></div>;
   }
   return (
-    <div className="container mx-auto p-4 ">
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-    </div>
   );
 }
