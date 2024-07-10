@@ -47,6 +47,7 @@ const formatDate = (dateString: string | undefined): string => {
 
 const MailchimpCampaigns: React.FC = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -56,6 +57,10 @@ const MailchimpCampaigns: React.FC = () => {
 
     fetchCampaigns();
   }, []);
+
+  const handleCardClick = (campaignId: string) => {
+    router.push(`/blog/${campaignId}`);
+  };
 
   const filteredCampaigns = campaigns
     .filter(campaign => campaign.settings?.preview_text)
@@ -81,21 +86,19 @@ const MailchimpCampaigns: React.FC = () => {
         </div>
       ) : (
         <div>
-          {campaigns
-            .filter(campaign => campaign.settings?.preview_text)
-            .map((campaign) => (
-              <div className="mb-5 cursor-pointer m-3" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
-                    <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Posted {formatDate(campaign.send_time)}</p>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+          {filteredCampaigns.map((campaign) => (
+            <div className="mb-5 cursor-pointer m-3" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
+                  <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p>Posted {formatDate(campaign.send_time)}</p>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
         </div>
       )}
     </div>
