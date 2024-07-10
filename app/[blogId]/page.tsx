@@ -2,9 +2,9 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { parse } from 'node-html-parser';
+import { Skeleton } from "@/components/ui/skeleton"
 
 import './page.css';
 
@@ -51,11 +51,11 @@ export default function BlogPost({ params }: { params: { blogId: string } }) {
   }, [params.blogId]);
 
   if (!htmlContent) {
-    return <p>Loading...</p>;
+    return <div className="flex flex-col items-center"><Skeleton className="mb-5 h-[100vh] w-[660px]" /></div>;
   }
   return (
-    <div className="container mx-auto p-4">
-      <div id="bodyTable" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+    <div className="container mx-auto p-4 ">
+      <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </div>
   );
 }

@@ -8,7 +8,7 @@ export function Footer() {
   
   return (
     <div style={{ display: pathname.endsWith(".jpg") ? "none" : "flex", justifyContent: "center", marginBottom: "20px" }}>
-      <footer style={{ display: "flex", width: "350px" }}>
+      <footer style={{ display: "flex", width: "350px", justifyContent: "center" }}>
         <p
           className="text-gray-500 mr-1"
           style={{ fontSize: "12px", display: "flex", alignItems: "center" }}
