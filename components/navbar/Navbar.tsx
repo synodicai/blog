@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Orbit } from "lucide-react";
 
 
-export const Navbar = ({
+export const PcNavbar = ({
   className,
 }: {
   className?: string;
