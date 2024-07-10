@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 
 const apiUrl = 'https://api.synodic.ai';
 
@@ -61,83 +61,43 @@ const MailchimpCampaigns: React.FC = () => {
     router.push(`/blog/${campaignId}`);
   };
 
+  const filteredCampaigns = campaigns
+    .filter(campaign => campaign.settings?.preview_text)
+    .sort((a, b) => new Date(b.send_time).getTime() - new Date(a.send_time).getTime());
+
   return (
     <div className="flex flex-col items-center">
       {campaigns.length === 0 ? (
         <div>
-          <div className='mb-5'>
-            <Card>
-              <CardHeader>
-                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
-                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-[24px]" />
-              </CardContent>
-            </Card>
-          </div>
-          <div className='mb-5'>
-            <Card>
-              <CardHeader>
-                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
-                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-[24px]" />
-              </CardContent>
-            </Card>
-          </div>
-          <div className='mb-5'>
-            <Card>
-              <CardHeader>
-                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
-                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-[24px]" />
-              </CardContent>
-            </Card>
-          </div>
-          <div className='mb-5'>
-            <Card>
-              <CardHeader>
-                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
-                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-[24px]" />
-              </CardContent>
-            </Card>
-          </div>
-          <div className='mb-5'>
-            <Card>
-              <CardHeader>
-                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
-                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="h-[24px]" />
-              </CardContent>
-            </Card>
-          </div>
+          {[...Array(5)].map((_, index) => (
+            <div className='mb-5' key={index}>
+              <Card>
+                <CardHeader>
+                  <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
+                  <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-[24px]" />
+                </CardContent>
+              </Card>
+            </div>
+          ))}
         </div>
       ) : (
         <div>
-          {campaigns
-            .filter(campaign => campaign.settings?.preview_text)
-            .map((campaign) => (
-              <div className="mb-5 cursor-pointer m-3" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
-                    <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>Posted {formatDate(campaign.send_time)}</p>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+          {filteredCampaigns.map((campaign) => (
+            <div className="mb-5 cursor-pointer m-3" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
+                  <CardDescription>{campaign.settings?.preview_text || 'Untitled Campaign'}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p>Posted {formatDate(campaign.send_time)}</p>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
         </div>
       )}
     </div>
