@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { parse } from 'node-html-parser';
+import { Skeleton } from "@/components/ui/skeleton"
 
 const apiUrl = 'https://api.synodic.ai';
 
@@ -64,13 +64,69 @@ const MailchimpCampaigns: React.FC = () => {
   return (
     <div className="flex flex-col items-center">
       {campaigns.length === 0 ? (
-        <p>Loading</p>
+        <div>
+          <div className='mb-5'>
+            <Card>
+              <CardHeader>
+                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
+                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[24px]" />
+              </CardContent>
+            </Card>
+          </div>
+          <div className='mb-5'>
+            <Card>
+              <CardHeader>
+                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
+                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[24px]" />
+              </CardContent>
+            </Card>
+          </div>
+          <div className='mb-5'>
+            <Card>
+              <CardHeader>
+                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
+                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[24px]" />
+              </CardContent>
+            </Card>
+          </div>
+          <div className='mb-5'>
+            <Card>
+              <CardHeader>
+                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
+                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[24px]" />
+              </CardContent>
+            </Card>
+          </div>
+          <div className='mb-5'>
+            <Card>
+              <CardHeader>
+                <CardTitle><Skeleton className="h-[24px] w-[750px]" /></CardTitle>
+                <CardDescription><Skeleton className="h-[20px]" /></CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-[24px]" />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       ) : (
         <div>
           {campaigns
             .filter(campaign => campaign.settings?.preview_text)
             .map((campaign) => (
-              <div className="mb-5 cursor-pointer" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
+              <div className="mb-5 cursor-pointer m-3" key={campaign.id} onClick={() => handleCardClick(campaign.id)}>
                 <Card>
                   <CardHeader>
                     <CardTitle>{campaign.settings?.subject_line || 'Untitled Campaign'}</CardTitle>
