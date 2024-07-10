@@ -1,11 +1,9 @@
 "use client";
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
-import { Menu, Orbit, X, DollarSign, BookImage, Mail, LogIn, UserRoundPlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Orbit} from "lucide-react";
 
 export const PhoneNavbar = ({
     className,
