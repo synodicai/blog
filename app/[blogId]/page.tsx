@@ -13,6 +13,12 @@ async function getData(blogId: string) {
       tag.remove();
     }
   });
+
+  const bodyTable = root.querySelector('#bodyTable');
+  if (bodyTable) {
+    bodyTable.setAttribute('style', `background-color: white;`);
+  }
+
   return root.toString();
 }
 
